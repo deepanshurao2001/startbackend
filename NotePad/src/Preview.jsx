@@ -1,43 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import Markdown from 'react-markdown'
+import axios from 'axios';
   
 
 function Preview() {
   const [content, setContent] = useState("")
   let {noteId } = useParams()
+  const navigate = useNavigate()
 
+  const updateNote = async () => {
+    
+    let {data} = await axios.post('http://localhost:3000/notes/preview/previewUpdate',{noteId: noteId , updateBody: {
+    content : content
+    }})
 
-  const handleChange = (e) => {
-    setContent(e)
-    let oldNotes = localStorage.getItem("notes")
-    let oldNotesData = JSON.parse(oldNotes)
-    let oldNotesDataAry 
-    = oldNotesData?.data || []
-    let currentNote = oldNotesDataAry.find((item) => item.id == noteId)
-    currentNote.content = e
-    let currentNoteIndex = oldNotesDataAry.findIndex((item) => item.id === noteId)
-    let newNotes = [...oldNotesDataAry]
-    newNotes[currentNoteIndex]  = currentNote
-    let  dataToSave = {data: newNotes}
-    localStorage.setItem("notes",JSON.stringify(dataToSave))
+    navigate('/')
 
   }
 
   const getNoteContent =async () => {
-    let oldNotes = await localStorage.getItem("notes")
-    let oldNotesData = 
-    JSON.parse(oldNotes)
-    console.log('oldNotesData:',oldNotesData);
-    let oldNotesDataAry 
-  = oldNotesData?.data || []
-    console.log('oldNotesDataArray:' ,oldNotesDataAry);
-    let currentNote = oldNotesDataAry.find((item) => String(item.id) == String(noteId))
-    console.log("Current note: ",currentNote)
+      let {data} = await axios.post('http://localhost:3000/notes/preview',{id: noteId})
 
-    console.log(`Note Id: ${noteId} `)
-    console.log('oldNotedataArray:', oldNotesDataAry);
-    setContent(currentNote?.content || "")
+      let note = data.data
+      setContent(note.content)
   }
 
   useEffect(() => {
@@ -52,8 +38,9 @@ function Preview() {
 
   return (
     <div style={{display:'flex'}}>
+    <button onClick={() => {updateNote()}}>Save</button>
     <div style={{flex:'0.5'}}>
-      <textarea  value={content} style={{width:'100%', height:'70vh'}}  onChange ={(e) => {handleChange(e.target.value)}} ></textarea>
+      <textarea  value={content} style={{width:'100%', height:'70vh'}}  onChange ={(e) => {setContent(e.target.value)}} ></textarea>
     </div>
     <div style={{flex:'0.5'}}>
 
