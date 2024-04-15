@@ -7,6 +7,6 @@ router.get('/notes/get', getAllNotes);
 
 router.post('/notes/add', addNote);
 
-router.delete('/notes/delete',deleteNote)
+router.post('/notes/delete',deleteNote)
 
 module.exports = router

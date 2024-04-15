@@ -12,7 +12,7 @@ const getAllNotes = async (req,res) => {
 const addNote = async (req,res) => {
     try{
         let reqBody = req.body
-        console.log("req id", reqBody)
+        console.log("req body", reqBody)
         let {noteData} = reqBody
      
         let note = new Note({
@@ -29,13 +29,15 @@ const addNote = async (req,res) => {
     }
 }
 
-const deleteNote = (req, res) => {
+const deleteNote = async (req, res) => {
     
-        let reqDelNoteId = req.body;
-        console.log("req id", req.body)
+        let reqBody = req.body;
+        console.log("req id", reqBody)
 
-        Note.splice(Note.findIndex(note => String(note.id) === String(reqDelNoteId)), 1);
-        res.status(200).json({ data: Note });
+        let {reqDelNoteId} = reqBody
+
+      await  Note.findByIdAndDelete(reqDelNoteId)
+        res.status(204).json({ data: 'delete success' });
     
 }
 
@@ -43,3 +45,9 @@ const deleteNote = (req, res) => {
 module.exports = {
     getAllNotes , addNote , deleteNote
 }
+
+/*
+
+
+
+*/
