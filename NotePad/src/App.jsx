@@ -27,9 +27,9 @@ function App() {
                                 let title = window.prompt('Enter note title')
                                 
                                 
-                                  let uniqueId = Date.now()
+                                  //let uniqueId = Date.now()
                                   let noteBody = {
-                                    id: uniqueId,
+                                    id: "",
                                     title: title,
                                     content: ""
                                   }
@@ -55,7 +55,7 @@ function App() {
 
   const deletenote = async (id) => {
     console.log(id);
-      await axios.delete(`http://localhost:3000/notes/delete/${id}`);
+      await axios.post('http://localhost:3000/notes/delete' , {reqDelNoteId : id});
       getNotes();
     
   }
@@ -154,7 +154,7 @@ function App() {
                       <CardActions>
                         <Button  size="small" onClick={(e) => {
                           e.stopPropagation();
-                          deletenote(note.id);
+                          deletenote(note._id);
                         }}variant="contained" href="#contained-buttons" >Delete Note</Button>
                       </CardActions>
                     </Card>
