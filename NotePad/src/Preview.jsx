@@ -20,7 +20,8 @@ function Preview() {
   }
 
   const getNoteContent =async () => {
-      let {data} = await axios.post('http://localhost:3000/notes/preview',{id: noteId})
+      
+      let {data} = await axios.post('http://localhost:3000/notes/preview',{noteId: noteId})
 
       let note = data.data
       setContent(note.content)

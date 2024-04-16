@@ -58,30 +58,34 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   res.status(200).json({ data: notes });
 }) */
 
-app.post('/notes/preview',(req, res) => {
-  let {id} = req.body
-  let note = notes.find((n) => String(n.id) == String(id) )
-  res.status(200).json({data:note})
-})
 
-app.post('/notes/preview/previewUpdate',(req, res) => {
-  let {noteId,updateBody} = req.body
 
-  let indexOfNoteToUpdate = notes.findIndex((n) => String(n.id) == String(noteId) )
 
-  let noteToUpdate = notes.find((n) => String(n.id) == String(noteId) )
 
-  noteToUpdate = {...noteToUpdate, ...updateBody}
+// app.post('/notes/preview',(req, res) => {
+//   let {id} = req.body
+//   let note = notes.find((n) => String(n.id) == String(id) )
+//   res.status(200).json({data:note})
+// })
 
-  notes[indexOfNoteToUpdate] = noteToUpdate
+// app.post('/notes/preview/previewUpdate',(req, res) => {
+//   let {noteId,updateBody} = req.body
 
-  res.status(200).json({data:noteToUpdate})
+//   let indexOfNoteToUpdate = notes.findIndex((n) => String(n.id) == String(noteId) )
+
+//   let noteToUpdate = notes.find((n) => String(n.id) == String(noteId) )
+
+//   noteToUpdate = {...noteToUpdate, ...updateBody}
+
+//   notes[indexOfNoteToUpdate] = noteToUpdate
+
+//   res.status(200).json({data:noteToUpdate})
 
   
 
 
 
-})
+// })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -41,9 +41,35 @@ const deleteNote = async (req, res) => {
     
 }
 
+const preview = async (req, res) => {
+        const { noteId } = req.body;
+        console.log(noteId);
+        const note = await Note.findById(noteId);
+        if (!note) {
+            return res.status(404).json({ error: "Note not found" });
+        }
+        // Assuming you only want to send title and a limited length content for preview
+        const previewData = {
+            title: note.title,
+            content: note.content // Adjust the length as needed
+        };
+        res.status(200).json({ data: previewData });
+  
+};
+
+const previewupdate = async (req, res) => {
+   
+        const { noteId, updateBody } = req.body;
+        
+        const updatedNote = await Note.findByIdAndUpdate(noteId, { ...updateBody }, { new: true });
+        if (!updatedNote) {
+            return res.status(404).json({ error: "Note not found" });
+        }
+        res.status(200).json({ data: updatedNote });
+};
 
 module.exports = {
-    getAllNotes , addNote , deleteNote
+    getAllNotes , addNote , deleteNote , preview , previewupdate
 }
 
 /*

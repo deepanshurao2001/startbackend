@@ -36,8 +36,9 @@ function App() {
                                  const {data} = await axios.post('http://localhost:3000/notes/add', {
                                   noteData: noteBody
                                  }) 
+                                 console.log(data.data);
+                                 setNotes([...notes,data.data])
 
-                                 setNotes(data.data)
   //                                navigate("/preview/"+uniqueId)
                   }
 
@@ -142,7 +143,7 @@ function App() {
                     borderRadius: 1, 
                 }}  >
                   {filteredNotes.map((note) => (
-                    <Card key={note.id} onClick={() => navigate('/preview/'+ note.id)}  sx={{ minWidth: 260, p: 1, m:1 }} style={{backgroundColor: "#80B8B8"}}  >
+                    <Card key={note.id} onClick={() => navigate('/preview/'+ note._id)}  sx={{ minWidth: 260, p: 1, m:1 }} style={{backgroundColor: "#80B8B8"}}  >
                       <CardContent >
                         <Typography variant="h5" component="div" >
                           {note?.title || 'untitled'}
