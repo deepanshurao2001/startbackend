@@ -1,14 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
 import LogIn from './components/LogIn/LogIn.jsx'
+import MainSpace from './components/MainSpace/MainSpace.jsx'
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<LogIn />} />
-  )
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LogIn />
+  },
+  {
+    path: "/mainspace", element: <MainSpace/> 
+  }
+]
+   // <Route path='/' element={<LogIn />} />
+    //<Route path='mainspace' element={ <MainSpace/> } />
+  
 )
 
 ReactDOM.createRoot(document.getElementById('root')).render(
