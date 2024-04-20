@@ -16,8 +16,7 @@ export default function LogIn() {
             backgroundSize: 'cover',
             backgroundAttachment: 'fixed', // Fixed background
             height: '100vh',
-            width: '100vw',
-            overflow: 'hidden',
+            width: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
