@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 
-export default function ModalUnstyled() {
+export default function CreateButton() {
     const [open, setOpen] = React.useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
@@ -17,15 +17,17 @@ export default function ModalUnstyled() {
             <TriggerButton
                 sx={{
                     border: 'none',
-                    padding: '0px',
+                    // padding: '0px',
                     marginLeft: '5px',
                     color: 'lightpink',
                     textDecoration: 'underline',
+                    borderRadius: '50px',
+                    backgroundColor: '#0288d1',
                 }}
                 type="button"
                 onClick={handleOpen}
             >
-                SignUp
+                Create
             </TriggerButton>
             <Modal
                 aria-labelledby="unstyled-modal-title"
