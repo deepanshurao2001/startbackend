@@ -6,28 +6,40 @@ import { Modal as BaseModal } from '@mui/base/Modal'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import MultiTagsSelect from '../MultiTagsSelect/MultiTagsSelect'
 
+import SaveIcon from '@mui/icons-material/Save'
+import TextEditor from '../TextEditor/TextEditor'
 export default function CreateButton() {
     const [open, setOpen] = React.useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
+    const [loading, setLoading] = React.useState(true)
+    function handleClick() {
+        setLoading(false)
+    }
 
     return (
-        <div>
+        <Box>
             <TriggerButton
                 sx={{
                     border: 'none',
-                    // padding: '0px',
-                    marginLeft: '5px',
-                    color: 'lightpink',
-                    textDecoration: 'underline',
-                    borderRadius: '50px',
-                    backgroundColor: '#0288d1',
+                    paddingX: '20px',
+                    paddingY: '7px',
+                    marginRight: '20px',
+                    marginBottom: '10px',
+                    color: 'white',
+                    borderRadius: '150px',
+                    backgroundColor: '#0072E5',
+                    position: 'absolute',
+                    bottom: '0',
+                    right: '0',
+                    fontSize: '30px',
                 }}
                 type="button"
                 onClick={handleOpen}
             >
-                Create
+                +
             </TriggerButton>
             <Modal
                 aria-labelledby="unstyled-modal-title"
@@ -36,41 +48,54 @@ export default function CreateButton() {
                 onClose={handleClose}
                 slots={{ backdrop: StyledBackdrop }}
             >
-                <ModalContent sx={{}}>
+                <ModalContent
+                    sx={{ width: '800px', height: '600px', overflow: 'scroll' }}
+                >
                     <Box
                         component="form"
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            '& > :not(style)': { m: 1, width: '25ch' },
+                            '& > :not(style)': { m: 1, width: '800px' },
                             marginBottom: '20px',
                             alignItems: 'center',
                         }}
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField label="Full Name" variant="filled" />
-                        <TextField label="Email address" variant="filled" />
-                        <TextField label="UserName" variant="filled" />
-                        <TextField
-                            label="Password"
+                        <TextField label="Title" variant="filled" />
+
+                        {/* Multiple select Tags */}
+
+                        <TextField label="Tags" variant="filled" />
+
+                        {/* Description or Blog */}
+                        {/* <TextField
+                            label="Discription"
                             variant="filled"
-                            type="password"
-                        />
+                            multiline
+                            rows={2}
+                        /> */}
+
+                        <MultiTagsSelect />
+
+                        {/* Text Editor of Blog */}
+
+                        <TextEditor />
+
+                        {/* Save Button */}
+
                         <Button
-                            sx={{
-                                backgroundColor: '#FBBCE9',
-                                '&:hover': { backgroundColor: 'LightPink' },
-                                borderRadius: '20px',
-                                color: 'black',
-                            }}
+                            color="primary"
+                            startIcon={<SaveIcon />}
+                            variant="contained"
                         >
-                            Create Account
+                            Save
                         </Button>
                     </Box>
                 </ModalContent>
             </Modal>
-        </div>
+        </Box>
     )
 }
 
@@ -183,7 +208,9 @@ const TriggerButton = styled('button')(
         box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 
         &:hover {
-            background: ${theme.palette.mode === 'dark' ? grey[800] : grey[50]};
+            background: ${theme.palette.mode === 'dark'
+                ? grey[800]
+                : grey[400]};
             border-color: ${theme.palette.mode === 'dark'
                 ? grey[600]
                 : grey[300]};

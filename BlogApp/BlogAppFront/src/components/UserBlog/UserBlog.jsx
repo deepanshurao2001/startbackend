@@ -3,8 +3,7 @@ import CreateButton from './CreateButton/CreateButton'
 import Box from '@mui/material/Box'
 function UserBlog() {
     return (
-        <Box>
-            <Box></Box>
+        <Box sx={{ position: 'relative', width: '100%', height: '90vh' }}>
             <CreateButton />
         </Box>
     )
