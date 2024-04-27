@@ -12,6 +12,12 @@ export default function ModalUnstyled() {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
+    const newUser = async () => {
+        let newUserFullName = document.getElementById('fullname').value
+        console.log(newUserFullName)
+        let
+    }
+
     return (
         <div>
             <TriggerButton
@@ -47,13 +53,26 @@ export default function ModalUnstyled() {
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField label="Full Name" variant="filled" />
-                        <TextField label="Email address" variant="filled" />
-                        <TextField label="UserName" variant="filled" />
+                        <TextField
+                            label="Full Name"
+                            variant="filled"
+                            id="fullname"
+                        />
+                        <TextField
+                            label="Email address"
+                            variant="filled"
+                            id="email"
+                        />
+                        <TextField
+                            label="UserName"
+                            variant="filled"
+                            id="username"
+                        />
                         <TextField
                             label="Password"
                             variant="filled"
                             type="password"
+                            id="password"
                         />
                         <Button
                             sx={{
@@ -62,6 +81,7 @@ export default function ModalUnstyled() {
                                 borderRadius: '20px',
                                 color: 'black',
                             }}
+                            onClick={() => newUser()}
                         >
                             Create Account
                         </Button>
