@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './LogIn.css'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -10,21 +10,32 @@ import Typography from '@mui/material/Typography'
 import ModalUnstyled from '../CreateAccount/CreateAccount'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { checkUserLoginStatus } from '../../util/loginUtil'
 
 export default function LogIn() {
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
     const logIn = async () => {
-        const logDetails = {
-            username: username,
-            password: password,
+        try {
+            const response = await axios.post(
+                'http://localhost:3000/api/login',
+                { logDetails: { username, password } }
+            )
+            const token = response.data.token
+            // Store token in local storage
+            localStorage.setItem('token', token)
+            console.log('Login successful')
+            navigate('/mainspace')
+        } catch (error) {
+            console.error('Login failed:', error.response.data.message)
         }
-        console.log(logDetails)
-
-        await axios.post('http://localhost:3000/logIn', { logDetails })
-        navigate('/mainspace')
     }
+
+    useEffect(() => {
+        checkUserLoginStatus(navigate)
+    }, [])
+
     return (
         <div
             style={{

@@ -17,9 +17,9 @@ import Recent from "../MainSpaceLayout/Recent";
 import Trending from "../MainSpaceLayout/Trending";
 import UserBlog from "../UserBlog/UserBlog";
 import Profile from "../Profile/Profile";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Recent", "Trending", "MyBlogs"];
-const settings = ["Profile", "Logout"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -40,6 +40,22 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const navigate = useNavigate();
+
+  const settings = [
+    {
+      title: "Profile",
+      action: () => {},
+    },
+    {
+      title: "Logout",
+      action: () => {
+        localStorage.removeItem("token");
+        navigate("/");
+      },
+    },
+  ];
 
   return (
     <Box>
@@ -178,14 +194,14 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
+                {settings.map(({ title, action }, index) => (
                   <MenuItem
-                    key={setting}
+                    key={index}
                     onClick={() => {
-                      setCurrentPage(setting);
+                      action();
                     }}
                   >
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography textAlign="center">{title}</Typography>
                   </MenuItem>
                 ))}
               </Menu>

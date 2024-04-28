@@ -1,5 +1,11 @@
 const User = require('../model/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+const generateToken = (userId) => {
+    return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' })
+}
+
 const createAccount = async (req, res) => {
     try {
         let reqBody = req.body
@@ -54,15 +60,21 @@ const logIn = async (req, res) => {
             userExist.password
         )
 
+        //     if (!isCorrectPassword) {
+        //         return res.status(400).json({
+        //             message: 'wrong password',
+        //         })
+        //     } else {
+        //         return res.status(200).json({
+        //             data: userExist,
+        //         })
+        //     }
+        // }
         if (!isCorrectPassword) {
-            return res.status(400).json({
-                message: 'wrong password',
-            })
-        } else {
-            return res.status(200).json({
-                data: userExist,
-            })
+            return res.status(400).json({ message: 'wrong password' })
         }
+        const token = generateToken(userExist._id)
+        res.status(200).json({ token })
     } catch (error) {
         console.log('error', error)
         res.status(400).json({ message: 'unknown error' })
