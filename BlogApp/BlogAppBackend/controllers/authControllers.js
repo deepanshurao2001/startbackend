@@ -1,7 +1,13 @@
 const User = require('../model/User')
+const bcrypt = require('bcrypt')
 const createAccount = async (req, res) => {
     try {
-        const { username, fullname, password, email } = req.body
+        let reqBody = req.body
+        console.log(reqBody)
+        let { newUserDetail } = req.body
+        const { username, fullname, password, email } = newUserDetail
+
+        //console.log('data:' + req.body)
 
         let existingUser = await User.findOne({ userName: username })
 
@@ -35,15 +41,18 @@ const createAccount = async (req, res) => {
 
 const logIn = async (req, res) => {
     try {
-        const { username, password } = req.body
+        let { logDetails } = req.body
+        const { username, password } = logDetails
         let userExist = await User.findOne({ userName: username })
         if (!userExist) {
             return res.status(400).json({
                 message: 'no userfound',
             })
         }
-
-        let isCorrectPassword = userExist.password === password
+        const isCorrectPassword = await bcrypt.compare(
+            password,
+            userExist.password
+        )
 
         if (!isCorrectPassword) {
             return res.status(400).json({

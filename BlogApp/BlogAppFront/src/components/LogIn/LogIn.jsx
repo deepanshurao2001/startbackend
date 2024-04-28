@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './LogIn.css'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -6,10 +6,25 @@ import Chip from '@mui/material/Chip'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
+//import Link from '@mui/material/Link'
 import ModalUnstyled from '../CreateAccount/CreateAccount'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export default function LogIn() {
+    const [username, setUserName] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+    const logIn = async () => {
+        const logDetails = {
+            username: username,
+            password: password,
+        }
+        console.log(logDetails)
+
+        await axios.post('http://localhost:3000/logIn', { logDetails })
+        navigate('/mainspace')
+    }
     return (
         <div
             style={{
@@ -76,11 +91,18 @@ export default function LogIn() {
                         noValidate
                         autoComplete="off"
                     >
-                        <TextField label="Username" variant="filled" />
+                        <TextField
+                            label="Username"
+                            variant="filled"
+                            value={username}
+                            onChange={(e) => setUserName(e.target.value)}
+                        />
                         <TextField
                             label="Password"
                             variant="filled"
                             type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <Button
                             sx={{
@@ -89,6 +111,7 @@ export default function LogIn() {
                                 borderRadius: '20px',
                                 color: 'black',
                             }}
+                            onClick={() => logIn()}
                         >
                             LogIn
                         </Button>

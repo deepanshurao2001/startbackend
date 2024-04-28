@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { styled, css } from '@mui/system'
@@ -6,16 +7,36 @@ import { Modal as BaseModal } from '@mui/base/Modal'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import axios from 'axios'
 
 export default function ModalUnstyled() {
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const newUser = async () => {
-        let newUserFullName = document.getElementById('fullname').value
-        console.log(newUserFullName)
-        let
+    const [email, setEmail] = useState('')
+    const [username, setUserName] = useState('')
+    const [fullname, setFullName] = useState('')
+    const [password, setPassword] = useState('')
+
+    const addNewUser = async () => {
+        // let newUserFullName = document.getElementById('fullname').value
+        // console.log(newUserFullName)
+        // let newUserEmail = document.getElementById('email').value
+        // console.log(newUserEmail)
+        // let newUserUserName = document.getElementById('username').value
+        // console.log(newUserUserName)
+        // let newUserPassword = document.getElementById('password').value
+        // console.log(newUserPassword)
+
+        const newUserDetail = {
+            username: username,
+            fullname: fullname,
+            password: password,
+            email: email,
+        }
+
+        await axios.post('http://localhost:3000/signup', { newUserDetail })
     }
 
     return (
@@ -56,23 +77,27 @@ export default function ModalUnstyled() {
                         <TextField
                             label="Full Name"
                             variant="filled"
-                            id="fullname"
+                            value={fullname}
+                            onChange={(e) => setFullName(e.target.value)}
                         />
                         <TextField
                             label="Email address"
                             variant="filled"
-                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <TextField
                             label="UserName"
                             variant="filled"
-                            id="username"
+                            value={username}
+                            onChange={(e) => setUserName(e.target.value)}
                         />
                         <TextField
                             label="Password"
                             variant="filled"
                             type="password"
-                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         <Button
                             sx={{
@@ -81,7 +106,7 @@ export default function ModalUnstyled() {
                                 borderRadius: '20px',
                                 color: 'black',
                             }}
-                            onClick={() => newUser()}
+                            onClick={() => addNewUser()}
                         >
                             Create Account
                         </Button>
