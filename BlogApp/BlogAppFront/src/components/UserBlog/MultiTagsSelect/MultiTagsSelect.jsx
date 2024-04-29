@@ -18,16 +18,16 @@ const MenuProps = {
 }
 
 const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
+    'WildLife',
+    'Nature',
+    'Animals',
+    'Politics',
+    'Technology',
+    'Fiction',
+    'Entertainment',
+    'Youth',
+    'Education',
+    'disease',
 ]
 
 function getStyles(name, personName, theme) {
@@ -55,8 +55,8 @@ export default function MultiTagsSelect() {
 
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+            <FormControl sx={{ width: 300 }}>
+                <InputLabel id="demo-multiple-name-label">Tags</InputLabel>
                 <Select
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"

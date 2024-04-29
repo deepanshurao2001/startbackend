@@ -12,12 +12,25 @@ import SaveIcon from '@mui/icons-material/Save'
 import TextEditor from '../TextEditor/TextEditor'
 export default function CreateButton() {
     const [open, setOpen] = React.useState(false)
+    const [editorContent, setEditorContent] = React.useState('')
+
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-    const [loading, setLoading] = React.useState(true)
-    function handleClick() {
-        setLoading(false)
+
+    const handleEditorChange = (content) => {
+        setEditorContent(content)
     }
+
+    const handleSave = () => {
+        // Here you can use editorContent variable for saving or further processing
+        console.log('Editor content:', editorContent)
+        // Add your save logic here
+    }
+
+    //  const [loading, setLoading] = React.useState(true)
+    // function handleClick() {
+    //     setLoading(false)
+    // }
 
     return (
         <Box>
@@ -67,7 +80,7 @@ export default function CreateButton() {
 
                         {/* Multiple select Tags */}
 
-                        <TextField label="Tags" variant="filled" />
+                        {/* <TextField label="Tags" variant="filled" /> */}
 
                         {/* Description or Blog */}
                         {/* <TextField
@@ -81,7 +94,7 @@ export default function CreateButton() {
 
                         {/* Text Editor of Blog */}
 
-                        <TextEditor />
+                        <TextEditor onChange={handleEditorChange} />
 
                         {/* Save Button */}
 
@@ -89,6 +102,7 @@ export default function CreateButton() {
                             color="primary"
                             startIcon={<SaveIcon />}
                             variant="contained"
+                            onClick={handleSave}
                         >
                             Save
                         </Button>
