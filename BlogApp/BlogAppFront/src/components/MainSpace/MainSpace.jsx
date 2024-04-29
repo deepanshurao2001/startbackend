@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,13 +17,20 @@ import Trending from "../MainSpaceLayout/Trending";
 import UserBlog from "../UserBlog/UserBlog";
 import Profile from "../Profile/Profile";
 import { useNavigate } from "react-router-dom";
+import { NoteOutlined } from "@mui/icons-material";
+import { getLoggedInUserDetails } from "../../util/loginUtil";
 
 const pages = ["Recent", "Trending", "MyBlogs"];
 
 function ResponsiveAppBar() {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [currentPage, setCurrentPage] = useState("Recent");
+
+  useEffect(() => {
+    getLoggedInUserDetails(navigate, "/mainspace");
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -41,17 +47,18 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const navigate = useNavigate();
-
   const settings = [
     {
       title: "Profile",
-      action: () => {},
+      action: () => {
+        navigate("/profile");
+      },
     },
     {
       title: "Logout",
       action: () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         navigate("/");
       },
     },
@@ -62,7 +69,7 @@ function ResponsiveAppBar() {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <NoteOutlined sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
@@ -78,7 +85,7 @@ function ResponsiveAppBar() {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              Blogs
             </Typography>
 
             {/* Search Area */}
@@ -215,7 +222,6 @@ function ResponsiveAppBar() {
         {currentPage === "Recent" && <Recent />}
         {currentPage === "Trending" && <Trending />}
         {currentPage === "MyBlogs" && <UserBlog />}
-        {currentPage === "Profile" && <Profile />}
       </Box>
     </Box>
   );

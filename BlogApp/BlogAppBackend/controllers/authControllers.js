@@ -81,7 +81,29 @@ const logIn = async (req, res) => {
     }
 }
 
+const getLoggedInUserDetails = async (req, res) => {
+    try {
+        let { token } = req.body
+
+        // Verify the JWT
+        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+            if (err) {
+                console.error('Token is not valid:', err.message)
+                return res.status(400).json({ message: 'unknown error' })
+            } else {
+                let userId = decoded.userId
+                let user = await User.findById(userId).select('-password')
+                return res.status(200).json({ data: user })
+            }
+        })
+    } catch (error) {
+        console.log('error', error)
+        res.status(400).json({ message: 'unknown error' })
+    }
+}
+
 module.exports = {
     createAccount,
     logIn,
+    getLoggedInUserDetails,
 }

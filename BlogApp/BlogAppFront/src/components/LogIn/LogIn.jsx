@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography'
 import ModalUnstyled from '../CreateAccount/CreateAccount'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { checkUserLoginStatus } from '../../util/loginUtil'
+import { getLoggedInUserDetails } from '../../util/loginUtil'
 
 export default function LogIn() {
     const [username, setUserName] = useState('')
@@ -33,7 +33,7 @@ export default function LogIn() {
     }
 
     useEffect(() => {
-        checkUserLoginStatus(navigate)
+        getLoggedInUserDetails(navigate, '/mainspace')
     }, [])
 
     return (

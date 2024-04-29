@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 function Profile() {
-    return <div>Profile</div>
+    const [user, setUser] = useState(null)
+    const getUserData = () => {
+        let data = localStorage.getItem('user')
+        if (data) {
+            setUser(JSON.parse(data))
+        }
+    }
+
+    useEffect(() => {
+        getUserData()
+    }, [])
+    return <div>{user?.email}</div>
 }
 
 export default Profile
