@@ -52,8 +52,8 @@ function Profile() {
         >
             <FormControl>
                 <TextField
-                    name="name"
-                    label="full name"
+                    name="fullName"
+                    label="Full Name"
                     variant="outlined"
                     value={formData?.fullName || ''}
                     onChange={handleChange}
@@ -62,7 +62,7 @@ function Profile() {
                     margin="normal"
                 />
                 <TextField
-                    name="username"
+                    name="userName"
                     label="Username"
                     variant="outlined"
                     value={formData?.userName || ''}
