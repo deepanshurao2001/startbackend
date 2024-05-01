@@ -5,15 +5,21 @@ import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 
 function Profile() {
+    const [username, setUserName] = useState('')
+    const [email, setEmail] = useState('')
+    const [fullname, setFullName] = useState('')
+
     const [user, setUser] = useState(null)
     const [editable, setEditable] = useState(false)
-    const [formData, setFormData] = useState({})
 
     const getUserData = () => {
         let data = localStorage.getItem('user')
         if (data) {
-            setUser(JSON.parse(data))
-            setFormData(JSON.parse(data))
+            let _user = JSON.parse(data)
+            setUser(_user)
+            setFullName(_user.fullName)
+            setUserName(_user.userName)
+            setEmail(_user.email)
         }
     }
 
@@ -26,20 +32,10 @@ function Profile() {
     }
 
     const handleSave = () => {
-        // Save form data to localStorage or send to backend
-        localStorage.setItem('user', JSON.stringify(formData))
-        setUser(formData)
-        setEditable(false)
+        // Implement save logic here
+        setEditable(false) // Disable editing after saving
     }
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setFormData({
-            ...formData,
-            [name]: value,
-        })
-    }
-    //return <div>{user?.email}</div>
     return (
         <Box
             sx={{
@@ -55,9 +51,9 @@ function Profile() {
                     name="fullName"
                     label="Full Name"
                     variant="outlined"
-                    value={formData?.fullName || ''}
-                    onChange={handleChange}
+                    value={fullname}
                     disabled={!editable}
+                    onChange={(e) => setFullName(e.target.value)}
                     fullWidth
                     margin="normal"
                 />
@@ -65,9 +61,9 @@ function Profile() {
                     name="userName"
                     label="Username"
                     variant="outlined"
-                    value={formData?.userName || ''}
-                    onChange={handleChange}
+                    value={username}
                     disabled={!editable}
+                    onChange={(e) => setUserName(e.target.value)}
                     fullWidth
                     margin="normal"
                 />
@@ -75,9 +71,9 @@ function Profile() {
                     name="email"
                     label="Email"
                     variant="outlined"
-                    value={formData?.email || ''}
-                    onChange={handleChange}
+                    value={email}
                     disabled={!editable}
+                    onChange={(e) => setEmail(e.target.value)}
                     fullWidth
                     margin="normal"
                 />
