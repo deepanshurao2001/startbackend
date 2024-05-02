@@ -6,7 +6,6 @@ import { Modal as BaseModal } from '@mui/base/Modal'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import MultiTagsSelect from '../MultiTagsSelect/MultiTagsSelect'
 
 import SaveIcon from '@mui/icons-material/Save'
 import TextEditor from '../TextEditor/TextEditor'

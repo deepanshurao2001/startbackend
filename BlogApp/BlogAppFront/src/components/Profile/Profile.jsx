@@ -9,8 +9,13 @@ function Profile() {
     const [email, setEmail] = useState('')
     const [fullname, setFullName] = useState('')
 
+    const [oldpassword, setOldPassword] = useState('')
+    const [newpassword, setNewPassword] = useState('')
+    const [confirmpassword, setConfirmPassword] = useState('')
+
     const [user, setUser] = useState(null)
     const [editable, setEditable] = useState(false)
+    const [visibleChangePassword, setVisibleChangePassword] = useState(false)
 
     const getUserData = () => {
         let data = localStorage.getItem('user')
@@ -36,10 +41,15 @@ function Profile() {
         setEditable(false) // Disable editing after saving
     }
 
+    const handleVisible = () => {
+        setVisibleChangePassword(true)
+    }
+
     return (
         <Box
             sx={{
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 width: '100vw',
@@ -87,6 +97,60 @@ function Profile() {
                     </Button>
                 )}
             </FormControl>
+            <Box
+                sx={{
+                    marginTop: '10px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
+                {visibleChangePassword ? (
+                    <Box
+                        sx={{
+                            marginTop: '10px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }}
+                    >
+                        <TextField
+                            name="oldPassword"
+                            label="Enter oldPassword"
+                            variant="outlined"
+                            value={oldpassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            name="newPassword"
+                            label="NewPassword"
+                            variant="outlined"
+                            value={newpassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            name="confirmNewPassword"
+                            label="confirm NewPassword"
+                            variant="outlined"
+                            value={confirmpassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <Button variant="contained">Save Password</Button>
+                    </Box>
+                ) : (
+                    <Button
+                        sx={{ marginTop: '10px' }}
+                        variant="contained"
+                        onClick={handleVisible}
+                    >
+                        Change Password
+                    </Button>
+                )}
+            </Box>
         </Box>
     )
 }
