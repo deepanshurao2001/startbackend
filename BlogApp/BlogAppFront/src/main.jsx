@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import App from './App.jsx'
 import './index.css'
 import LogIn from './components/LogIn/LogIn.jsx'
 import MainSpace from './components/MainSpace/MainSpace.jsx'
 import Profile from './components/Profile/Profile.jsx'
+import EditBlog from './components/UserBlog/Blog/EditBlog.jsx'
 
 const router = createBrowserRouter(
     [
@@ -20,6 +20,10 @@ const router = createBrowserRouter(
         {
             path: '/profile',
             element: <Profile />,
+        },
+        {
+            path: '/blog',
+            element: <EditBlog />,
         },
     ]
     // <Route path='/' element={<LogIn />} />

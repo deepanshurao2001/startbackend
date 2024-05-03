@@ -12,6 +12,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { getLoggedInUserDetails } from '../../util/loginUtil'
 
+// In case of Box.js error, delete folder in node_modules => .vite => deps and restart
 export default function LogIn() {
     const [username, setUserName] = useState('')
     const [password, setPassword] = useState('')
