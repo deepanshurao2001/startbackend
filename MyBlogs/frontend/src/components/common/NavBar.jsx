@@ -12,20 +12,42 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import Recent from "../MainSpaceLayout/Recent";
-import Trending from "../MainSpaceLayout/Trending";
-import Profile from "../Profile/Profile";
-import { useNavigate } from "react-router-dom";
+//import Recent from "../MainSpaceLayout/Recent";
+
+import { useNavigate, useLocation } from "react-router-dom";
 import { NoteOutlined } from "@mui/icons-material";
-import { getLoggedInUserDetails } from "../../util/loginUtil";
 
 const NavBar = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  // const [currentPage, setCurrentPage] = useState("Recent");
   const [currentPage, setCurrentPage] = useState("Recent");
 
-  const pages = ["Recent", "Trending"];
+  const pages = [
+    {
+      title: "Recent",
+      action: () => {
+        setCurrentPage("Recent");
+        navigate("/mainspace");
+      },
+    },
+    {
+      title: "Trending",
+      action: () => {
+        setCurrentPage("Trending");
+        navigate("/trending");
+      },
+    },
+  ];
+  useEffect(() => {
+    const pathname = location.pathname;
+    const page = pages.find((p) => pathname.includes(p.title.toLowerCase()));
+    if (page) {
+      setCurrentPage(page.title);
+    }
+  }, [location.pathname]);
   // useEffect(() => {
   //     getLoggedInUserDetails(navigate, '/mainspace')
   // }, [])
@@ -139,14 +161,14 @@ const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
+              {pages.map(({ title, action }, index) => (
                 <MenuItem
-                  key={page}
+                  key={index}
                   onClick={() => {
-                    setCurrentPage(page);
+                    action();
                   }}
                 >
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">{title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -179,13 +201,18 @@ const NavBar = () => {
               display: { xs: "none", md: "flex" },
             }}
           >
-            {pages.map((page) => (
+            {pages.map(({ title, action }, index) => (
               <Button
-                key={page}
-                onClick={() => setCurrentPage(page)}
+                key={index}
+                onClick={() => action()}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                <Typography
+                  textAlign="center"
+                  sx={{ color: currentPage === title ? "Black" : "Primary" }}
+                >
+                  {title}
+                </Typography>
               </Button>
             ))}
           </Box>
